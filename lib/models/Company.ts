@@ -1,6 +1,10 @@
-import mongoose, { Schema, models, model } from "mongoose";
+import mongoose, { Schema, Model, models } from "mongoose";
 
-const CompanySchema = new Schema(
+export interface ICompany {
+  name: string;
+}
+
+const CompanySchema = new Schema<ICompany>(
   {
     name: {
       type: String,
@@ -11,7 +15,8 @@ const CompanySchema = new Schema(
   { timestamps: true }
 );
 
-const Company =
-  models.Company || model("Company", CompanySchema);
+// 👇 THIS LINE FIXES THE ERROR
+const Company: Model<ICompany> =
+  models.Company || mongoose.model<ICompany>("Company", CompanySchema);
 
 export default Company;
