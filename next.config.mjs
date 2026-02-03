@@ -1,18 +1,16 @@
-import withPWA from 'next-pwa';
+import withPWA from "next-pwa";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
 };
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = process.env.NODE_ENV === "production";
 
-export default isProd
-  ? withPWA({
-      ...nextConfig,
-      pwa: {
-        dest: 'public',
-        disable: true, // 🔴 disable PWA during Vercel build
-      },
-    })
-  : nextConfig;
+export default withPWA({
+  ...nextConfig,
+  pwa: {
+    dest: "public",
+    disable: !isProd, // PWA OFF in dev, ON in production
+  },
+});
