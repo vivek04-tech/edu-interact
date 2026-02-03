@@ -8,9 +8,8 @@ const nextConfig = {
 const isProd = process.env.NODE_ENV === "production";
 
 export default withPWA({
-  ...nextConfig,
   pwa: {
     dest: "public",
     disable: !isProd,
   },
-});
+})(nextConfig);
