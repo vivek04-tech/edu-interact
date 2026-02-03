@@ -1,21 +1,18 @@
-import nextPWA from "next-pwa";
+import withPWA from 'next-pwa';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-
-  // Force webpack (required for next-pwa)
-  webpack: (config) => {
-    return config;
-  },
-
-  // Required to silence Turbopack error
-  turbopack: {},
 };
 
-export default nextPWA({
-  dest: "public",
-  register: true,
-  skipWaiting: true,
-  disable: false,
-})(nextConfig);
+const isProd = process.env.NODE_ENV === 'production';
+
+export default isProd
+  ? withPWA({
+      ...nextConfig,
+      pwa: {
+        dest: 'public',
+        disable: true, // 🔴 disable PWA during Vercel build
+      },
+    })
+  : nextConfig;
